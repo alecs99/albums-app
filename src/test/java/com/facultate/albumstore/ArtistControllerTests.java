@@ -79,4 +79,32 @@ public class ArtistControllerTests {
 
         Mockito.verify(artistRepository, times(1)).deleteById(artistId);
     }
+
+    @Test
+    public void testEditArtistForm() throws Exception {
+        Integer artistId = 1;
+        Artist artist = new Artist(artistId, "Artist 1");
+
+        when(artistRepository.findById(artistId)).thenReturn(Optional.of(artist));
+
+        mockMvc.perform(get("/artist/edit/" + artistId))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("edit_artist"))
+                .andExpect(model().attribute("artist", artist));
+    }
+
+    @Test
+    public void testEditArtist() throws Exception {
+        Integer artistId = 1;
+        Artist artist = new Artist(artistId, "Artist 1");
+
+        when(artistRepository.save(artist)).thenReturn(artist);
+
+        mockMvc.perform(post("/artist/edit/" + artistId)
+                .param("nume", artist.getNume()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/artist"));
+
+        Mockito.verify(artistRepository, times(1)).findById(artistId);
+    }
 }

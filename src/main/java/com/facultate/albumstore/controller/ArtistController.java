@@ -41,4 +41,21 @@ public class ArtistController {
         return "redirect:/artist";
     }
 
+    @RequestMapping("/artist/edit/{artistId}")
+    public String editGet(@PathVariable Integer artistId, Model model) {
+        Optional<Artist> artist = artistRepository.findById(artistId);
+        if (artist.isPresent()) {
+            model.addAttribute("artist", artist.get());
+            return "edit_artist";
+        } else {
+            return "redirect:/artist";
+        }
+    }
+
+    @PostMapping("/artist/edit")
+    public String editPost(Artist artist) {
+        artistRepository.save(artist);
+        return "redirect:/artist";
+    }
+
 }
