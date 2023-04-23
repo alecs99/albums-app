@@ -34,4 +34,11 @@ public class ArtistController {
         artistRepository.save(artist);
         return "redirect:/artist";
     }
+
+    @RequestMapping("/artist/delete/{artistId}")
+    public String delete(@PathVariable Integer artistId) {
+        artistRepository.deleteById(artistId);
+        return "redirect:/artist";
+    }
+
 }

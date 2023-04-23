@@ -68,4 +68,15 @@ public class ArtistControllerTests {
 
         Mockito.verify(artistRepository, times(1)).save(Mockito.any(Artist.class));
     }
+
+    @Test
+    public void testDeleteArtist() throws Exception {
+        Integer artistId = 1;
+
+        mockMvc.perform(get("/artist/delete/" + artistId))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/artist"));
+
+        Mockito.verify(artistRepository, times(1)).deleteById(artistId);
+    }
 }
