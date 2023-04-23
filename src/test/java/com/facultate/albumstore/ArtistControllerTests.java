@@ -48,4 +48,24 @@ public class ArtistControllerTests {
                 .andExpect(MockMvcResultMatchers.view().name("artist"))
                 .andExpect(model().attribute("artists", artists));
     }
+
+    @Test
+    public void testAddArtistForm() throws Exception {
+        mockMvc.perform(get("/artist/add-form"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.view().name("new_artist"))
+                .andExpect(model().attributeExists("artist"));
+    }
+
+    @Test
+    public void testAddArtist() throws Exception {
+        Artist artist = new Artist(1, "Artist 1");
+
+        mockMvc.perform(post("/artist/add-new")
+                .param("nume", artist.getNume()))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(MockMvcResultMatchers.view().name("redirect:/artist"));
+
+        Mockito.verify(artistRepository, times(1)).save(Mockito.any(Artist.class));
+    }
 }

@@ -22,4 +22,16 @@ public class ArtistController {
         model.addAttribute("artists", artistRepository.findAll());
         return "artist";
     }
+
+    @RequestMapping("/artist/add-form")
+    public String addGet(Model model) {
+        model.addAttribute("artist", new Artist());
+        return "new_artist";
+    }
+
+    @PostMapping("/artist/add-new")
+    public String add(Artist artist) {
+        artistRepository.save(artist);
+        return "redirect:/artist";
+    }
 }
