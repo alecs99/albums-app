@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Adauga un album</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+    <div>
+        <h1>Adauga un album</h1>
+    </div>
+    <form th:action="@{/album}" th:object="${album}"
+          method="post" style="max-width: 600px; margin: 0 auto;">
+        <div class="m-3">
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Titlu: </label>
+                <div class="col-8">
+                    <input type="text" th:field="*{titlu}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Pret: </label>
+                <div class="col-8">
+                    <input type="number" th:field="*{pret}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">In stock: </label>
+                <div class="col-8">
+                    <input type="number" th:field="*{inStock}"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-4 col-form-label">Artist: </label>
+                <div class="col-8">
+                    <select th:field="*{artist}">
+                        <option th:each="artistItem : ${artisti}"
+                                th:text="${artistItem.nume}"
+                                th:value="${artistItem.artistId}">
+                    </select>
+                </div>
+            </div>
+
+            <input type="text" th:field="*{albumId}" style="visibility: hidden">
+            <div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
